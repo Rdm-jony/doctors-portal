@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import chair from '../../../assets/images/chair.png'
 import bg from '../../../assets/images/bg.png'
 import { DayPicker } from 'react-day-picker';
-import { format } from 'date-fns';
 
 
-const AppoinmentBanner = () => {
-    const [selected, setSelected] = useState(new Date())
+const AppoinmentBanner = ({selectedDate,setSelectedDate}) => {
     return (
         <div>
             <header style={{ "background": `url(${bg})`, "backgroundRepeat": "no-repeat", "backgroundPosition": "center", "backgroundSize": "cover" }}>
@@ -18,8 +16,8 @@ const AppoinmentBanner = () => {
                         <div className='lg:w-1/2 w-full flex justify-center'>
                             <DayPicker
                                 mode="single"
-                                selected={selected}
-                                onSelect={setSelected}
+                                selected={selectedDate}
+                                onSelect={setSelectedDate}
                             ></DayPicker>
                         </div>
                     </div>

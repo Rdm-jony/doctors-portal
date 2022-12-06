@@ -1,12 +1,21 @@
 import React from 'react';
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext)
     const menuItem = <React.Fragment>
-        <li><NavLink to="home" >Home</NavLink></li>
-        <li><NavLink to="appoinment">Appoinment</NavLink>
-        </li>
+        <li><NavLink to="../home" >Home</NavLink></li>
+        <li><NavLink to="../appoinment">Appoinment</NavLink></li>
+        <li><NavLink to="/dashboard">Dashboard</NavLink></li>
     </React.Fragment>
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(er => console.log(er))
+    }
     return (
         <div>
             <div className="navbar bg-slate-100">
@@ -25,10 +34,21 @@ const Navbar = () => {
                     <ul className="menu menu-horizontal p-0">
                         {menuItem}
                     </ul>
+
                 </div>
                 <div className="navbar-end">
-                    <NavLink className="btn">Get started</NavLink>
+                    {
+                        user?.uid ? <>
+                            <p className='text-primary font-bold mr-2'>{user?.displayName}</p>
+                            <button className='btn btn-secondary' onClick={handleLogOut} type="">Log Out</button>
+                        </> :
+                            <NavLink to="sign-up">Log in</NavLink>
+
+                    }
                 </div>
+                <label htmlFor="my-drawer-2" className="lg:hidden ml-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                </label>
             </div>
         </div>
     );
